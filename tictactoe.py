@@ -38,8 +38,8 @@ class Match():
     
     def play(self):
         """Begins the match."""
-        global board
-        
+        move = 1
+        check = 0
         player1 = self.players[0]
         player2 = self.players[1]
         print('\n')
@@ -51,10 +51,11 @@ class Match():
             print('\n')
             print('===== CURRENT BOARD ====\n')
             print(self.board.state)
-            print('========================\n\n')
+            print('\n========================\n\n')
             print('|| Player %s turn'%(turn+1))
             self.players[turn].make_move(self.board)
-            check = self.board.checkState()
+            if move != 1:
+                check = self.board.check_state()
             if check == 1:
                 print('\n')
                 print('===== FINAL BOARD ====\n')
@@ -65,6 +66,7 @@ class Match():
                 turn = 1
             else:
                 turn = 0
+            move += 1
 
 class Board():
     """Represents a 3x3 tic-tac-toe board."""
@@ -73,11 +75,11 @@ class Board():
         """Initializes an empty board."""
         self.state = np.empty((3, 3), dtype=str)
         
-    def checkState(self):
+    def check_state(self):
         """Checks if match reached an ending stage: win or tie."""
         #Check if X wins
-        row_count_x, col_count_x, diag1_x, diag2_x = self.nonDiagCount('X')
-        row_count_o, col_count_o, diag1_o, diag2_o = self.nonDiagCount('O')
+        row_count_x, col_count_x, diag1_x, diag2_x = self.non_diag_count('X')
+        row_count_o, col_count_o, diag1_o, diag2_o = self.non_diag_count('O')
         if np.sum(row_count_x == 3) == 1 or np.sum(col_count_x  == 3) == 1 or diag1_x == 3 or diag2_x == 3:
             print("\n==============================\n")
             print("MATCH IS OVER. X Wins!\n")
@@ -97,7 +99,7 @@ class Board():
             return 1
         
         
-    def nonDiagCount(self, sign):
+    def non_diag_count(self, sign):
         """Counts occurencies of any sign on the the two axis."""
         row_count = np.sum(self.state == sign, axis = 1)
         col_count = np.sum(self.state == sign, axis = 0)

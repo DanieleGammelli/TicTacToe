@@ -60,7 +60,9 @@ class Match():
                 print('\n')
                 print('===== FINAL BOARD ====\n')
                 print(self.board.state)
-                print('\nGame time: %.02f min'%((time.time() - self.time)/60))
+                print('\nGame time: %i:%i min'%(round((time.time() - self.time)/60),
+                                                (time.time() - self.time)%60))
+                self.board = Board()
                 break
             if turn == 0:
                 turn = 1
@@ -103,7 +105,7 @@ class Board():
         """Counts occurencies of any sign on the the two axis."""
         row_count = np.sum(self.state == sign, axis = 1)
         col_count = np.sum(self.state == sign, axis = 0)
-        diag1 = self.state.diagonal()
+        diag1 = np.sum(self.state.diagonal() == sign)
         diag2 = np.sum(np.array([self.state[2,0], self.state[1,1], self.state[0,2]]) == sign)
         
         return row_count, col_count, diag1, diag2
@@ -144,15 +146,7 @@ class HumanPlayer(Player):
             else:
                 board.state[self.x][self.y] = self.sign
                 break
-            
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+if __name__ == '__main__':
+    match = Match()
+    match.play()

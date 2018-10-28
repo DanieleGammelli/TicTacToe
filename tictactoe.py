@@ -70,6 +70,7 @@ class Match():
                 turn = 0
             move += 1
 
+
 class Board():
     """Represents a 3x3 tic-tac-toe board."""
     
@@ -99,8 +100,7 @@ class Board():
             print("MATCH IS OVER. It's a tie!\n")
             print("==============================\n")
             return 1
-        
-        
+
     def non_diag_count(self, sign):
         """Counts occurencies of any sign on the the two axis."""
         row_count = np.sum(self.state == sign, axis = 1)
@@ -121,6 +121,7 @@ class Board():
         plt.plot([0,3],[2,2], c = 'k')
 #        plt.text(0.5,0.5, 'X', fontsize = 20)
 
+
 class Player():
     """Represents a tic-tac-toe player. Can be either Human or Ai."""
     
@@ -132,6 +133,7 @@ class Player():
         else:
             self.sign = 'O'
         self.count += 1
+
 
 class HumanPlayer(Player):
     """Human Player."""
@@ -146,6 +148,7 @@ class HumanPlayer(Player):
             else:
                 board.state[self.x][self.y] = self.sign
                 break
+
 
 if __name__ == '__main__':
     match = Match()
